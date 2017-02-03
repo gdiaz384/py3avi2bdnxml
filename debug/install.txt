@@ -1,0 +1,26 @@
+install python 3.2-3.5
+reboot/relog (to update %path%)
+cmd.exe
+pip install Pillow   #image library dependency
+pip install pyinstaller   #py script to binary converter
+pyinstaller --version
+pyinstaller --onefile py3srt2bdnxml.py   #actual command to compile
+Then look for the output under ./dist
+
+
+
+
+#Pillow dependencies
+pip uninstall pil
+pip install libjpeg
+pip install zlib
+pip install libtiff
+pip install libfreetype
+pip install littlecms
+pip install libwebp
+pip install tcl/tk
+pip install openjpeg
+pip install libimagequant
+pip install Pillow
+
+

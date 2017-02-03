@@ -1,0 +1,60 @@
+﻿srt
+00:00:45,337 --> 00:00:47,172  (1089)
+00:00:50,425 --> 00:00:52,094  (1211)
+00:00:55,097 --> 00:00:55,806  (1323)
+01:23:50,234 --> 01:23:50,984  (120726)
+01:24:08,710 --> 01:24:14,174  (121170)
+01:24:47,666 --> 01:24:50,002  (122104)
+
+FrameRate="24"
+FirstEventInTC="00:00:45:08" LastEventOutTC="01:24:50:00"
+<Event InTC="00:00:45:08" OutTC="00:00:47:04" m6_1_1.png
+<Event InTC="00:00:50:10" OutTC="00:00:52:02" m6_2_5.png
+<Event InTC="00:00:55:02" OutTC="00:00:55:19" m6_3_9.png
+<Event InTC="01:23:50:06" OutTC="01:23:50:24" m6_4_13.png
+<Event InTC="01:24:08:17" OutTC="01:24:14:04" m6_5_17.png
+<Event InTC="01:24:47:16" OutTC="01:24:50:00" m6_6_21.png
+<Event InTC="01:24:47:16" OutTC="01:24:50:00" m6_.png
+
+FrameRate="23.976" 
+FirstEventInTC="00:00:45:07" LastEventOutTC="01:24:44:22" 
+<Event InTC="00:00:45:07" OutTC="00:00:47:03" m23976xml_1_1.png
+<Event InTC="00:00:50:09" OutTC="00:00:52:01" m23976xml_2_5.png
+<Event InTC="00:00:55:01" OutTC="00:00:55:18" m23976xml_3_9.png
+<Event InTC="01:23:45:05" OutTC="01:23:45:23" m23976xml_4_13.png
+<Event InTC="01:24:03:16" OutTC="01:24:09:03" m23976xml_5_17.png
+<Event InTC="01:24:42:14" OutTC="01:24:44:22" m23976xml_6_21.png
+<Event InTC="01:24:42:14" OutTC="01:24:44:22" m23976xml_.png
+
+FrameRate="50"
+FirstEventInTC="00:00:45:08" LastEventOutTC="01:24:50:00"
+<Event InTC="00:00:45:08" OutTC="00:00:47:04" m5000_1_1.png
+<Event InTC="00:00:50:10" OutTC="00:00:52:02" m5000_2_5.png
+<Event InTC="00:00:55:02" OutTC="00:00:55:19" m5000_3_9.png
+<Event InTC="01:23:50:06" OutTC="01:23:50:24" m5000_4_13.png
+<Event InTC="01:24:08:17" OutTC="01:24:14:04" m5000_5_17.png
+<Event InTC="01:24:47:16" OutTC="01:24:50:00" m5000_6_21.png
+<Event InTC="01:24:47:16" OutTC="01:24:50:00" m5000_.png
+
+FrameRate="50.94"
+FirstEventInTC="00:00:45:07" LastEventOutTC="01:24:44:22"
+<Event InTC="00:00:45:07" OutTC="00:00:47:03" m5994_1_1.png
+<Event InTC="00:00:50:09" OutTC="00:00:52:01" m5994_2_5.png
+<Event InTC="00:00:55:01" OutTC="00:00:55:18" m5994_3_9.png
+<Event InTC="01:23:45:05" OutTC="01:23:45:23" m5994_4_13.png
+<Event InTC="01:24:03:16" OutTC="01:24:09:03" m5994_5_17.png
+<Event InTC="01:24:42:14" OutTC="01:24:44:22" m5994_6_21.png
+<Event InTC="01:24:42:14" OutTC="01:24:44:22" m5994_.png
+
+
+
+02:26:38:18 (time code in XML)
+2 hours = 2*60*60 seconds = 7200s 
+26 minutes = 26*60 seconds = 1560s
+38 seconds = 38s
+18 frames = 18/24 s = 750ms
+In sum this equals 8798750 ms.
+Now since the given frame rate is really 23.976Hz, this value is multiplied by 1.001
+This equals 8807548.75ms
+This equals 2 hours, 26 minutes, 47 seconds and 549ms
+2:26:47.549 (real time code displayed in BDSup2Sub)

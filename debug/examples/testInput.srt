@@ -1,0 +1,121 @@
+1
+00:00:05,463 --> 00:00:14,014
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00000.bmp
+
+2
+00:00:14,014 --> 00:00:19,436
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00001.bmp
+
+3
+00:00:21,521 --> 00:00:22,022
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00002.bmp
+
+4
+00:00:22,022 --> 00:00:22,731
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00003.bmp
+
+5
+00:00:22,731 --> 00:00:23,481
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00004.bmp
+
+6
+00:00:23,481 --> 00:00:23,773
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00005.bmp
+
+7
+00:00:23,773 --> 00:00:24,315
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00006.bmp
+
+8
+00:00:24,315 --> 00:00:24,858
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00007.bmp
+
+9
+00:00:24,858 --> 00:00:27,694
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00008.bmp
+
+10
+00:00:27,694 --> 00:00:28,111
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00009.bmp
+
+11
+00:00:28,111 --> 00:00:35,577
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00010.bmp
+
+12
+00:00:35,577 --> 00:00:35,660
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00011.bmp
+
+13
+00:00:45,545 --> 00:00:51,676
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00012.bmp
+
+14
+00:00:59,267 --> 00:01:01,269
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00013.bmp
+
+15
+00:01:01,269 --> 00:01:01,603
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00014.bmp
+
+16
+00:01:01,603 --> 00:01:01,978
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00015.bmp
+
+17
+00:01:05,607 --> 00:01:05,774
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00016.bmp
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00017.bmp
+
+18
+00:01:06,107 --> 00:01:06,274
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00018.bmp
+
+19
+00:01:06,357 --> 00:01:06,441
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00019.bmp
+
+20
+00:01:06,775 --> 00:01:07,025
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00020.bmp
+
+21
+00:01:07,025 --> 00:01:07,275
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00021.bmp
+
+22
+00:01:07,275 --> 00:01:07,525
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00022.bmp
+
+23
+00:01:07,525 --> 00:01:07,776
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00023.bmp
+
+24
+00:01:07,776 --> 00:01:08,026
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00024.bmp
+
+25
+00:01:08,026 --> 00:01:08,276
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00025.bmp
+
+26
+00:01:08,276 --> 00:01:09,652
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00026.bmp
+
+27
+00:01:09,652 --> 00:01:09,694
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00027.bmp
+
+28
+00:01:13,573 --> 00:01:14,866
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00028.bmp
+
+29
+00:01:14,866 --> 00:01:15,283
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00029.bmp
+
+30
+00:01:15,283 --> 00:01:36,971
+C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00030.bmp
+
