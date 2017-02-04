@@ -1,30 +1,39 @@
 # py3srt2bdnxml
 
 py3srt2bdnxml.py converts the imageTimings.srt produced by AVISubDetector to a BDN XML file that can be read by BDSup2Sub++.
-It is meant to be part of a larger workflow providing for a method include
+It is meant to be part of a larger workflow to include foreign hardsubs as BD PGS (.sup) files in Matroska containers.
 
 ## Key Features:
 
 - Works.
-- Standard BDNXML output.
-- Future: Supports multiple resolutions (480-1080 both 16/9 and 4/3).
-- Supports 23.976 and 24 fps modes. Future: Additional fps modes.
-- Output.xml can be read by BDNXML compliant applications like BDSup2Sub++.
+- Standard BDNXML output.xml file can be read by applications like BDSup2Sub++.
+- Supports 23.976 and 24 fps modes. 
+- Supports multiple resolutions (480, 720p, 1080p both 16:9 and 4:3 variants).
 - Automatically remove quirks from SRT AVISubDetector file.
-- Future: Supports quirky srt to "standard srt" conversions.
-- Future: Supports merging discrete AVISubDetector SRT files.
-- Future: Supports Karaoke and Kanji modes.
 
 ## Workflow Features:
 
 - Provides a non-OCR way to include subs.
 - Ideal for subs foriegn to one's native language.
 - Ideal for difficult to OCR fonts and character sets.
-- Automatic generates timing information in SRT format.
+- Automatic generates timing information from hardsubs in SRT format.
+   - Change to .ASS format via Aegisub or Subtitle Edit.
+
+## Planned Features:
+
+- Future: Supports quirky SRT to "standard SRT" conversions.
+- Future: Supports merging discrete AVISubDetector SRT files.
+- Future: Supports Romaji and Kanji modes.
+- Future: Additional fps modes.
 
 ## Example Usage Guide:
 
-Syntax: py3srt2bdnxml --infile myfile.srt --quality 480p
+Syntax: py3srt2bdnxml myfile.srt [--quality  720p
+
+Options (Default):
+Quality: 480p, 480p_43, 720p, 720p_43, 1080p, 1080p_43, (720p)
+FPS: 23.976, 24, (23.976) -All other FPS modes are experimental.
+
 
 Note: [ ] means optional.
 
@@ -34,8 +43,8 @@ py3srt2bdnxml -h
 py3srt2bdnxml --help
 
 Basic Usage:
-py3srt2bdnxml --infile myfile.srt --quality 480p
-
+py3srt2bdnxml myfile.srt
+py3srt2bdnxml myfile.srt --quality 480p
 
 Advanced Usage:
 py3srt2bdnxml --infile myfile.srt --quality 480p --pixels-from-bottom 2

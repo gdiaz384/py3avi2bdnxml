@@ -1,0 +1,41 @@
+﻿- add 4:3 resolution hack 
+- output only "cleaned" SRT (--removequirks, -rq) -half done
+   - (modify lastsubtitle + --keepfirst, -kf, --keeplast, -kl)
+
+
+- add additional resolutions -done
+- support Romaji and Kanji only modes (--onlyKanji, -ok, --onlyRomaji, -or) -done-ish
+   - change pixelsfrombottom to y offset --yoffset -yo   -done
+   - add x offset (only used for Kanji mode), --xoffset -xo   -done
+- processImages? 
+
+need: new calculations for valid Kanji mode -need to test
+-Kanji should be centered -need to test
+
+Long term:
+- add additional FPS options
+
+
+
+
+#--centered width, formula: source_frame_width-image_width)/2 = the number of x pixels to offset the image
+#same for both dialogue and and romaji
+def get_xOffset(functGraphicWidth):
+    return int((videoWidth-functGraphicWidth)/2)
+
+#--dialogueYOffset, formula: source_frame_height-image_height-yOffset  = the number
+def get_dialogueYOffset(functGraphicHeight):
+    return videoHeight-functGraphicHeight-yOffset 
+
+#--romajiYOffset, formula: return yoffset
+def get_romajiYOffset():
+    return yOffset
+
+#--kanjiXOffset, Calculate prior to fixing dimensions, so imageHeight is actually imageWidth
+#check if -kr is enabled
+def get_kanjiXOffset(graphicDimensions):
+
+#--kanjiYOffset, Calculate prior to fixing dimensions, so imageWidth is actually imageHeight
+#always centered along Y
+def get_kanjiYOffset(graphicDimensions):
+

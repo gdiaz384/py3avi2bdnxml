@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<BDN xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="0.93" xsi:noNamespaceSchemaLocation="BD-03-006-0093b BDN File Format.xsd">
+  <Description>
+    <Name Content="" Title="Undefined"/>
+    <Language Code="en"/>
+    <Format DropFrame="false" FrameRate="23.976" VideoFormat="480p"/>
+    <Events ContentInTC="00:00:00:00" ContentOutTC="00:01:18:04" FirstEventInTC="00:00:05:10" LastEventOutTC="00:01:18:04" NumberofEvents="29" Type="Graphic"/>
+  </Description>
+  <Events>
+    <Event Forced="False" InTC="00:00:05:10" OutTC="00:00:14:00">
+      <Graphic Height="34" Width="391" X="124" Y="444">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00000.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:14:00" OutTC="00:00:19:09">
+      <Graphic Height="35" Width="436" X="102" Y="443">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00001.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:21:11" OutTC="00:00:22:00">
+      <Graphic Height="68" Width="481" X="79" Y="410">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00002.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:22:00" OutTC="00:00:22:16">
+      <Graphic Height="45" Width="481" X="79" Y="433">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00003.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:22:16" OutTC="00:00:23:10">
+      <Graphic Height="41" Width="481" X="79" Y="437">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00004.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:23:10" OutTC="00:00:23:17">
+      <Graphic Height="41" Width="481" X="79" Y="437">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00005.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:23:17" OutTC="00:00:24:06">
+      <Graphic Height="41" Width="481" X="79" Y="437">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00006.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:24:06" OutTC="00:00:24:19">
+      <Graphic Height="41" Width="481" X="79" Y="437">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00007.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:24:19" OutTC="00:00:27:15">
+      <Graphic Height="41" Width="481" X="79" Y="437">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00008.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:27:15" OutTC="00:00:28:01">
+      <Graphic Height="41" Width="481" X="79" Y="437">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00009.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:28:01" OutTC="00:00:35:12">
+      <Graphic Height="41" Width="481" X="79" Y="437">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00010.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:35:12" OutTC="00:00:35:14">
+      <Graphic Height="40" Width="481" X="79" Y="438">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00011.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:45:11" OutTC="00:00:51:14">
+      <Graphic Height="33" Width="301" X="169" Y="445">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00012.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:59:04" OutTC="00:01:01:04">
+      <Graphic Height="40" Width="301" X="169" Y="438">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00013.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:01:04" OutTC="00:01:01:12">
+      <Graphic Height="41" Width="346" X="147" Y="437">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00014.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:01:12" OutTC="00:01:01:21">
+      <Graphic Height="41" Width="301" X="169" Y="437">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00015.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:06:00" OutTC="00:01:06:04">
+      <Graphic Height="42" Width="391" X="124" Y="436">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00018.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:06:06" OutTC="00:01:06:08">
+      <Graphic Height="43" Width="436" X="102" Y="435">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00019.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:06:16" OutTC="00:01:06:22">
+      <Graphic Height="55" Width="211" X="214" Y="423">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00020.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:06:22" OutTC="00:01:07:04">
+      <Graphic Height="38" Width="481" X="79" Y="440">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00021.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:07:04" OutTC="00:01:07:10">
+      <Graphic Height="34" Width="346" X="147" Y="444">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00022.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:07:10" OutTC="00:01:07:16">
+      <Graphic Height="55" Width="346" X="147" Y="423">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00023.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:07:16" OutTC="00:01:07:22">
+      <Graphic Height="57" Width="481" X="79" Y="421">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00024.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:07:22" OutTC="00:01:08:04">
+      <Graphic Height="40" Width="346" X="147" Y="438">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00025.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:08:04" OutTC="00:01:09:13">
+      <Graphic Height="61" Width="436" X="102" Y="417">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00026.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:09:13" OutTC="00:01:09:14">
+      <Graphic Height="36" Width="301" X="169" Y="442">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00027.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:13:11" OutTC="00:01:14:18">
+      <Graphic Height="34" Width="301" X="169" Y="444">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00028.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:14:18" OutTC="00:01:15:04">
+      <Graphic Height="41" Width="346" X="147" Y="437">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00029.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:15:04" OutTC="00:01:18:04">
+      <Graphic Height="41" Width="346" X="147" Y="437">[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00030.bmp</Graphic>
+    </Event>
+  </Events>
+</BDN>

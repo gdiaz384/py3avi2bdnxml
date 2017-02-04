@@ -16,8 +16,8 @@ python py3srt2bdnxml.py imageTimings.srt -q 480p
 python py3srt2bdnxml.py imageTimings.srt -q 480p -pfb 2 -o output.xml
 python py3srt2bdnxml.py imageTimings.srt -q 480p -o output.xml
 
-Current version: 0.1
-Last Modified: 02Feb17
+Current version: 0.1-beta
+Last Modified: 04Feb17
 License: any, 
 
 ##stop reading now##
@@ -37,6 +37,7 @@ from PIL import Image     #Pillow image library for checking image resolutions
 import pysrt                       #read input from subrip (.srt) files
 import decimal                 #improved precision for arithmetic operations
 from lxml import etree      #XML datastructure + I/O
+import copy                       #to deepcopy() srt object for fixing SRT quirk
 
 from decimal import ROUND_DOWN
 num=decimal.Decimal
@@ -51,44 +52,77 @@ defaultDropFrameStatus='false'
 
 #set static internal use variables
 currentVersion='v0.1 - 02Feb17'
-usageHelp='\n CorrectUsage: \n py3srt2bdnxml input.srt\n py3srt2bdnxml input.srt -o output.xml\n py3srt2bdnxml input.srt -q 480p -pfb 2 -o output.xml'
+usageHelp='\n CorrectUsage: \n py3srt2bdnxml input.srt\n py3srt2bdnxml input.srt -o output.xml\n py3srt2bdnxml input.srt [-q 480p] [-yo 2] [-o output.xml]'
 
 #add command line options
 command_Line_parser=argparse.ArgumentParser(description='Description: Replaces strings in text files using a replacement table.' + usageHelp)
 command_Line_parser.add_argument("inputSRT", help="the text file to process",type=str)
 command_Line_parser.add_argument("-q", "--quality", help="specify quality 480p/720p/1080p, default={}".format(defaultQuality),default=defaultQuality,type=str)
-command_Line_parser.add_argument("-pfb", "--pixelsFromBottom", help="specify how far subs should be from bottom, >=1 and <=video.height, default={}".format(defaultPixelOffset),default=defaultPixelOffset,type=int)
+command_Line_parser.add_argument("-xo", "--xOffset", help="specify how far kanji should be from left and right, >=2 and <=video.width, default={}".format(defaultPixelOffset),default=defaultPixelOffset,type=int)
+command_Line_parser.add_argument("-yo", "--yOffset", help="specify how far dialogue and romaji should be from bottom and top, >=2 and <=video.height, default={}".format(defaultPixelOffset),default=defaultPixelOffset,type=int)
 command_Line_parser.add_argument("-fps", "--framesPerSecond", help="specify conversion rate from SRT to BDN XML timecodes, default is 24000/1001",default=defaultFPS,type=str)
-command_Line_parser.add_argument("-e", "--srtEncoding", help="specify input file encoding, default={}".format(defaultEncodingType),default=defaultEncodingType,type=str)
-command_Line_parser.add_argument("-o", "--output", help="specify the output file name, default is to append .xml")
+command_Line_parser.add_argument("-e", "--srtEncoding", help="specify encoding for input files, default={}".format(defaultEncodingType),default=defaultEncodingType,type=str)
+command_Line_parser.add_argument("-ok", "--onlyKanji", help="specify the only input file represents Kanji input", action="store_true")
+command_Line_parser.add_argument("-or", "--onlyRomaji", help="specify the only input file represents Romaji input", action="store_true")
+command_Line_parser.add_argument("-kf", "--kanjiFile", help="specify an additional Kanji input file", type=str)
+command_Line_parser.add_argument("-rf", "--romajiFile", help="specify an additional Romaji input file", type=str)
+command_Line_parser.add_argument("-kr", "--kanjiRight", help="alignment for Kanji should be on the right , default=Left", action="store_true")
+command_Line_parser.add_argument("-ip", "--enableImageProcessing", help="vertically flip romaji images and rotate kanji ones clockwise, or counterclockwise with -kr", action="store_true")
+command_Line_parser.add_argument("-pl", "--preferLast", help="when resolving duplicate file entries for a subtitle, prefer the last one list, default=First", action="store_true")
+command_Line_parser.add_argument("-d", "--debug", help="display calculated settings and other information",action="store_true")
+command_Line_parser.add_argument("-o", "--output", help="specify the output file name, default is to change to .xml",type=str)
 
 #parse command line settings
 command_Line_arguments=command_Line_parser.parse_args()
 inputFileName=command_Line_arguments.inputSRT
 quality=command_Line_arguments.quality
-pixelsFromBottom=command_Line_arguments.pixelsFromBottom
+xOffset=command_Line_arguments.xOffset
+yOffset=command_Line_arguments.yOffset
 fpsRate=encodingType=command_Line_arguments.framesPerSecond
 encodingType=command_Line_arguments.srtEncoding
+onlyKanji=command_Line_arguments.onlyKanji
+onlyRomaji=command_Line_arguments.onlyRomaji
+kanjiRight=command_Line_arguments.kanjiRight
+processImages=command_Line_arguments.enableImageProcessing
+debug=command_Line_arguments.debug
 dropFrameStatus=defaultDropFrameStatus
 
-if command_Line_arguments.output != None:
-    outputFileName=command_Line_arguments.output
-else:
-    outputFileName=inputFileName + ".xml"   #TODO: rename the srt to .xml not just append an extension
+#debug code  TODO: print out some settings, and also support a debug switch -partial
+if debug == True:
+    print("inputFileName="+inputFileName)
+    print("quality="+str(quality))
+    print("yOffset="+str(yOffset))
+    print("outputFileName="+outputFileName)
+    print("fpsRate="+str(fpsRate))
 
-#debug code  TODO: print out some settings, and also support a -debug switch
-#print("inputFileName="+inputFileName)
-#print("quality="+str(quality))
-#print("pixelsFromBottom="+str(pixelsFromBottom))
-#print("outputFileName="+outputFileName)
-#print("fpsRate="+str(fpsRate))
-#check to make sure input is valid
-#check input
 #check to make sure input.srt actually exists
 if os.path.isfile(inputFileName) != True:
     sys.exit('\n Error: Unable to find SRT file "' + inputFileName + '"' + usageHelp)
 
-#TODO: add 4:3 options (quality_43) -humm...
+if command_Line_arguments.output != None:
+    outputFileName=command_Line_arguments.output
+else:
+    outputFileName=os.path.splitext(inputFileName)[0]+ ".xml"
+
+kanjiFileSpecified=False
+if command_Line_arguments.kanjiFile != None:
+    if os.path.isfile(kanjiFile) == True:
+        kanjiFile=command_Line_arguments.kanjiFile
+        kanjiFileSpecified=True
+
+romajiFileSpecified=False
+if command_Line_arguments.romajiFile != None:
+    if os.path.isfile(romajiFile) == True:
+        romajiFile=command_Line_arguments.romajiFile
+        romajiFileSpecified=True
+
+#subtle bug in case user includes both -kf and input file
+if onlyRomaji == True:
+    romajiFileSpecified=False
+
+if onlyKanji == True:
+    kanjiFileSpecified=False
+
 #check quality
 qualityValid=False
 if quality == '480p':
@@ -100,6 +134,16 @@ if quality == '480':
     qualityValid=True
     videoWidth=848
     videoHeight=480
+if quality == '480p_43':
+    quality='480p'
+    qualityValid=True
+    videoWidth=640
+    videoHeight=480
+if quality == '480_43':
+    quality='480p'
+    qualityValid=True
+    videoWidth=640
+    videoHeight=480
 
 if quality == '720p':
     qualityValid=True
@@ -109,6 +153,16 @@ if quality == '720':
     quality='720p'
     qualityValid=True
     videoWidth=1280
+    videoHeight=720
+if quality == '720p_43':
+    quality='720p'
+    qualityValid=True
+    videoWidth=960
+    videoHeight=720
+if quality == '720_43':
+    quality='720p'
+    qualityValid=True
+    videoWidth=960
     videoHeight=720
 
 if quality == '1080p':
@@ -120,20 +174,39 @@ if quality == '1080':
     qualityValid=True
     videoWidth=1920
     videoHeight=1080
+if quality == '1080p_43':
+    quality='1080p'
+    qualityValid=True
+    videoWidth=1440
+    videoHeight=1080
+if quality == '1080_43':
+    quality='1080p'
+    qualityValid=True
+    videoWidth=1440
+    videoHeight=1080
 
 if qualityValid!=True:
     sys.exit('\n Error: The following quality setting is invalid: "' + quality + '"' + usageHelp)
 
-#TODO: update to 2 pixels from bottom minumum
-#check pixelsFromBottom
-#1080 - 1080 + 1080 > 1080-1 
-# valid range is 2-1076
-# invalid if (pixels from bottom + imageHeight > videoHeight) #ends too high
-# invalid if (pixels from Bottom is or <1) #starts too low
-if pixelsFromBottom < 1:
-    sys.exit('\n Error: pixelsFromBottom setting is out of [1,{}] range: "'.format(videoHeight-3) + str(pixelsFromBottom) + '"' + usageHelp)
-if pixelsFromBottom + 2 >= videoHeight:
-    sys.exit('\n Error: pixelsFromBottom setting is out of [1,{}] range: "'.format(videoHeight-3) + str(pixelsFromBottom) + '"' + usageHelp)
+#TODO: include rules for romaji and kanji -partial
+#check yOffset
+# valid range is [2-1076] for a 2 pixel height image
+# invalid if (yOffset + imageHeight +2 >= videoHeight) #ends too high
+# invalid if (yOffset is < 2) #starts too low
+if yOffset < 2:
+    sys.exit('\n Error: yOffset setting is out of [2,{}] range: "'.format(videoHeight-4) + str(yOffset) + '"' + usageHelp)
+if yOffset + 2 >= videoHeight:
+    sys.exit('\n Error: yOffset setting is out of [2,{}] range: "'.format(videoHeight-4) + str(yOffset) + '"' + usageHelp)
+
+#for Kanji mode, check --xoffset
+#check xOffset
+# valid range is [2-1916] for a 2 pixel width image
+# invalid if (xOffset + imageWidth +2 >= videoHeight) #ends too far right
+# invalid if (xOffset is < 2) #starts too far left
+if xOffset < 2:
+    sys.exit('\n Error: xOffset setting is out of [2,{}] range: "'.format(videoWidth-4) + str(xOffset) + '"' + usageHelp)
+if xOffset +2 >= videoWidth:
+    sys.exit('\n Error: xOffset setting is out of [2,{}] range: "'.format(videoWidth-4) + str(xOffset) + '"' + usageHelp)
 
 try: 
     fpsRate=num(fpsRate)
@@ -150,16 +223,36 @@ except decimal.InvalidOperation:  #occurs when converting string with / to decim
 #    print(fpsRate + 'raised a value error')
 
 
-#debug code
-#print("quality="+str(quality))
-#print("qualityValid="+str(qualityValid))
-#print("videoWidth="+str(videoWidth))
-#print("videoHeight="+str(videoHeight))
-#print("fpsRate after type conversion="+str(fpsRate))
+if debug == True:
+    print("quality: "+str(quality))
+    print("qualityValid: "+str(qualityValid))
+    print("videoWidth: "+str(videoWidth))
+    print("videoHeight: "+str(videoHeight))
+    print("fpsRate after type conversion: "+str(fpsRate))
 
 #read input
 srtFile = pysrt.open(inputFileName, encoding=encodingType)
-#TODO: AVISubDetector borks the ending of the last srt entry, so fix it here.
+#TODO: AVISubDetector borks the ending time of the last srt entry, so fix it here. -done
+#Re-time the last sub to end 3 seconds after it begins
+tempSrtFile=copy.deepcopy(srtFile)
+#print('Full: '+str(srtFile[len(srtFile)-1]))
+tempSrtFile[len(tempSrtFile)-1].shift(seconds=3)
+srtFile[len(srtFile)-1].end=tempSrtFile[len(tempSrtFile)-1].start
+#srtFile[len(srtFile)-1].start=tempLastSrtEntry
+#print('Full: '+str(tempSrtFile[len(srtFile)-1]))  #print temporary object
+#print('Full: '+str(srtFile[len(srtFile)-1]))            #print main object
+
+if romajiFileSpecified == True:
+    romajiSrtFile=pysrt.open(romajiFile, encoding=encodingType)
+    tempSrtFile=copy.deepcopy(romajiSrtFile)
+    tempSrtFile[len(tempSrtFile)-1].shift(seconds=3)
+    romajiSrtFile[len(romajiSrtFile)-1].end=tempSrtFile[len(tempSrtFile)-1].start
+    
+if kanjiFileSpecified == True:
+    kanjiSrtFile = pysrt.open(kanjiFile, encoding=encodingType)
+    tempSrtFile=copy.deepcopy(kanjiSrtFile)
+    tempSrtFile[len(tempSrtFile)-1].shift(seconds=3)
+    kanjiSrtFile[len(kanjiSrtFile)-1].end=tempSrtFile[len(tempSrtFile)-1].start
 
 #List full object contents + attributes
 #for attr, value in srtFile.__dict__.items():
@@ -211,7 +304,7 @@ def get_BDNXMLTime(funct_hours,funct_minutes,funct_seconds,real_milliseconds):
     #print(totalMiliseconds)
     baseFPS=24
     newFPS=fpsRate
-    fpsMapping=baseFPS/newFPS
+    fpsMapping=baseFPS/newFPS    #this does not appear to be correct for non 24 fps counts
     #print(fpsMapping)
     BDXMLTotalMilliseconds=totalMiliseconds/fpsMapping
     #print(BDXMLTotalMilliseconds)
@@ -239,21 +332,47 @@ def get_BDNXMLTime(funct_hours,funct_minutes,funct_seconds,real_milliseconds):
 def get_graphicDimensions(image_path):
     return Image.open(image_path, mode='r').size
 
-#--centered width  (formula: (source_frame_width-image_width)/2 = the number of x pixels to offset the image)
-def get_xoffset(functGraphicWidth):
+#--centered width, formula: source_frame_width-image_width)/2 = the number of x pixels to offset the image
+#same for both dialogue and and romaji
+def get_XOffset(functGraphicWidth):
     return int((videoWidth-functGraphicWidth)/2)
 
-#--y offset (formula: source_frame_height-image_height-number_of_pixels_from_bottom = the number
-def get_yoffset(functGraphicHeight):
-    return videoHeight-functGraphicHeight-pixelsFromBottom 
+#--dialogueYOffset, formula: source_frame_height-image_height-yOffset  = the number
+def get_dialogueYOffset(functGraphicHeight):
+    return videoHeight-functGraphicHeight-yOffset 
 
-myFilePath=r'C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00000.bmp'
-dimensions=get_graphicDimensions(myFilePath)
-graphic_xdim=dimensions[0]
-graphic_ydim=dimensions[1]
-#print('xoffset: '+str(get_xoffset(graphic_xdim)))
-#print('yoffset: '+str(get_yoffset(graphic_ydim)))
+#--romajiYOffset, formula: return yoffset
+def get_romajiYOffset():
+    return yOffset
 
+#--kanjiXOffset, Calculate prior to fixing dimensions, so imageHeight is actually imageWidth
+#check if -kr is enabled
+def get_kanjiXOffset(graphicDimensions):
+    #graphicDimensions[0] = unprocessed width
+    #graphicDimensions[1] = unprocessed height
+    if kanjiRight != True:
+        return xOffset
+    elif kanjiRight == True:
+        #full width - graphicWidth-offset
+        return  videoWidth-graphicDimensions[1]-xOffset
+
+#--kanjiYOffset, Calculate prior to fixing dimensions, so imageWidth is actually imageHeight
+#always centered along Y
+def get_kanjiYOffset(graphicDimensions):
+    #graphicDimensions[0] = unprocessed width
+    #graphicDimensions[1] = unprocessed height
+    #(videoHeight-imageheight)/2
+    return int((videoHeight-graphicDimensions[0])/2)
+
+#debug code
+#myFilePath=r'C:\Users\User\Desktop\py3srt2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00000.bmp'
+#dimensions=get_graphicDimensions(myFilePath)
+#graphic_xdim=dimensions[0]
+#graphic_ydim=dimensions[1]
+#print('xoffset: '+str(get_XOffset(graphic_xdim)))
+#print('yoffset: '+str(get_dialogueYOffset(graphic_ydim)))
+
+#debug code
 #get_BDNXMLTime(2,26,47,549)
 #get_BDNXMLTime(0,0,45,337)
 #get_BDNXMLTime(0,0,50,425)
@@ -261,6 +380,7 @@ graphic_ydim=dimensions[1]
 #get_BDNXMLTime(1,23,50,234)
 #get_BDNXMLTime(1,24,8,710)
 
+#lxml template
 #from lxml import etree 
 #to create
 #html = etree.Element("html")
@@ -278,6 +398,7 @@ graphic_ydim=dimensions[1]
 #temp=etree.ElementTree(xmldoc)
 #temp.write('output.xml',pretty_print=True,xml_declaration=True, encoding='UTF-8')
 
+#bdnxml template
 #<BDN Version="0.93" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 #xsi:noNamespaceSchemaLocation="BD-03-006-0093b BDN File Format.xsd">
 #    <Description>
@@ -310,54 +431,114 @@ etree.SubElement(description, 'Format',  DropFrame=dropFrameStatus, VideoFormat=
 #description_events not written here because requires information not yet known
 events = etree.SubElement(xmldoc,'Events')
 
+#random variable declarations
 numberOfEventsCounter=0
+lowestBDNXMLinTimeObject=0
+highestBDNXMLinTimeObject=0
 
-global lowestBDNXMLinTimeObject
-global highestBDNXMLinTimeObject
+#try to add to xml
+#if only dialogue, add as dialogue, write out, quit
+#if only romaji, add as romaji, write out, quit
+#if only kanji, add as kani, write out, quit
+#if combined...
 
-for i in range(len(srtFile)):
-    #print('Full: '+str(srtFile[i]))
-    #print('Text: '+srtFile[i].text)
-    #if file i/o check, file exists, then process the item, else skip it
-    if os.path.isfile(str(srtFile[i].text)) == True:
-        numberOfEventsCounter+=1
-       #get 
-        #image width
-        #image height
-        #x offset
-        #y offset
-        #in time
-            #convert to bdxml
-        #out time
-            #convert to bdxml
-        #parsed filename
-        #add new Event below "events" tag
-            #add Graphic tag with properties inside of event, text is parsed filename
-        graphicDimensions=get_graphicDimensions(srtFile[i].text)
-        graphicWidth=graphicDimensions[0]
-        graphicHeight=graphicDimensions[1]
-        xOffset=get_xoffset(graphicWidth)
-        yOffset=get_yoffset(graphicHeight)
-        tempBDNXMLInTimeObject=get_BDNXMLTime(srtFile[i].start.hours,srtFile[i].start.minutes,srtFile[i].start.seconds,returnFractionalTime(srtFile[i].start.ordinal))
-        inTime=tempBDNXMLInTimeObject[0]
-        tempBDNXMLOutTimeObject=get_BDNXMLTime(srtFile[i].end.hours,srtFile[i].end.minutes,srtFile[i].end.seconds,returnFractionalTime(srtFile[i].end.ordinal))
-        outTime=tempBDNXMLOutTimeObject[0]
-        if i == 0:
-            lowestBDNXMLinTimeObject=tempBDNXMLInTimeObject
-            highestBDNXMLinTimeObject=tempBDNXMLOutTimeObject
-            #print('pie')
-        if tempBDNXMLInTimeObject[1] < lowestBDNXMLinTimeObject[1]:
-            lowestBDNXMLinTimeObject=tempBDNXMLInTimeObject
-        if tempBDNXMLOutTimeObject[1] > highestBDNXMLinTimeObject[1]:
-            highestBDNXMLinTimeObject=tempBDNXMLOutTimeObject
-        parsedFilename=os.path.basename(srtFile[i].text)
-        tempEvent=etree.SubElement(events,'Event', Forced='False', InTC=inTime, OutTC=outTime)
-        tempGraphic=etree.SubElement(tempEvent,'Graphic', Width=str(graphicWidth), Height=str(graphicHeight), X=str(xOffset), Y=str(yOffset))
-        tempGraphic.text=parsedFilename
-    elif os.path.isfile(str(srtFile[i].text)) == False:
-        #this can also fail on malformed paths, like where srt[23].text is actually 2 concatenated file paths linked with a \n
-        #TODO: make this code more flexible to account for above scenario
-        print('"' + srtFile[i].text + '"'+ ' does not exist or is malformed, skipping')
+#get 
+#image width
+#image height
+#x offset
+#y offset
+#in time
+    #convert to bdxml
+#out time
+    #convert to bdxml
+#parsed filename
+#add new Event below "events" tag
+    #add Graphic tag with properties inside of event, text is parsed filename
+def addToBDNXML(functSrtFile,typeOfInput):
+    for i in range(len(functSrtFile)):
+        global numberOfEventsCounter
+        global highestBDNXMLinTimeObject
+        global lowestBDNXMLinTimeObject
+        #print('Full: '+str(functSrtFile[i]))
+        #print('Text: '+functSrtFile[i].text)
+        #if file i/o check, file exists, then process the item, else skip it
+        if os.path.isfile(str(functSrtFile[i].text)) == True:
+            numberOfEventsCounter+=1
+            graphicDimensions=get_graphicDimensions(functSrtFile[i].text)
+
+            if typeOfInput == 'dialogue':
+                graphicWidth=graphicDimensions[0]
+                graphicHeight=graphicDimensions[1]
+                graphicXOffset=get_XOffset(graphicWidth)
+                graphicYOffset=get_dialogueYOffset(graphicHeight)
+            if typeOfInput == 'romaji':
+                graphicWidth=graphicDimensions[0]
+                graphicHeight=graphicDimensions[1]
+                graphicXOffset=get_XOffset(graphicWidth)
+                graphicYOffset=get_romajiYOffset(graphicHeight)
+            if typeOfInput == 'kanji':
+                graphicWidth=graphicDimensions[1]  #processed Width
+                graphicHeight=graphicDimensions[0]   #processed Height
+                graphicXOffset=get_kanjiXOffset(graphicDimensions)
+                graphicYOffset=get_kanjiYOffset(graphicDimensions)
+
+            tempBDNXMLInTimeObject=get_BDNXMLTime(functSrtFile[i].start.hours,functSrtFile[i].start.minutes,functSrtFile[i].start.seconds,returnFractionalTime(functSrtFile[i].start.ordinal))
+            inTime=tempBDNXMLInTimeObject[0]
+            tempBDNXMLOutTimeObject=get_BDNXMLTime(functSrtFile[i].end.hours,functSrtFile[i].end.minutes,functSrtFile[i].end.seconds,returnFractionalTime(functSrtFile[i].end.ordinal))
+            outTime=tempBDNXMLOutTimeObject[0]
+
+            if lowestBDNXMLinTimeObject == 0:
+                lowestBDNXMLinTimeObject=tempBDNXMLInTimeObject
+                highestBDNXMLinTimeObject=tempBDNXMLOutTimeObject
+                #print('pie')
+            if tempBDNXMLInTimeObject[1] < lowestBDNXMLinTimeObject[1]:
+                lowestBDNXMLinTimeObject=tempBDNXMLInTimeObject
+            if tempBDNXMLOutTimeObject[1] > highestBDNXMLinTimeObject[1]:
+                highestBDNXMLinTimeObject=tempBDNXMLOutTimeObject
+
+            parsedFilename=os.path.basename(functSrtFile[i].text)
+            tempEvent=etree.SubElement(events,'Event', Forced='False', InTC=inTime, OutTC=outTime)
+            tempGraphic=etree.SubElement(tempEvent,'Graphic', Width=str(graphicWidth), Height=str(graphicHeight), X=str(graphicXOffset), Y=str(graphicYOffset))
+            tempGraphic.text=parsedFilename
+
+        elif os.path.isfile(str(functSrtFile[i].text)) == False:
+            #this can also fail on malformed paths, like where srt[23].text is actually 2 concatenated file paths linked with a \n
+            #TODO: make this code more flexible to account for above scenario
+            print('"' + functSrtFile[i].text + '"'+ ' does not exist or is malformed, skipping')
+
+#if only dialogue, add as dialogue, write out, quit
+if kanjiFileSpecified != True:
+    if romajiFileSpecified != True:
+        addToBDNXML(srtFile, 'dialogue')
+
+#if only romaji, add as romaji, write out, quit
+if onlyRomaji == True:
+    addToBDNXML(srtFile, 'romaji')
+
+#if only kanji, add as kanji, write out, quit
+if onlyKanji == True:
+    addToBDNXML(srtFile, 'kanji')
+
+# dialogue + romaji    
+if kanjiFileSpecified != True:
+    if romajiFileSpecified == True:
+        addToBDNXML(srtFile, 'dialogue')
+        addToBDNXML(romajiSrtFile, 'romaji')
+
+# dialogue + kanji
+if kanjiFileSpecified == True:
+    if romajiFileSpecified != True:
+        addToBDNXML(srtFile, 'dialogue')
+        addToBDNXML(kanjiSrtFile, 'kanji')
+
+# dialogue + romaji + kanji
+if kanjiFileSpecified == True:
+    if romajiFileSpecified == True:
+        addToBDNXML(srtFile, 'dialogue')
+        addToBDNXML(romajiSrtFile, 'romaji')
+        addToBDNXML(kanjiSrtFile, 'kanji')
+
+# kanji + romaji   #not a supported operation due to requiring input.srt, (interface issue)
 
 firstEventTime=lowestBDNXMLinTimeObject[0]
 lastEventTime=highestBDNXMLinTimeObject[0]
@@ -371,9 +552,12 @@ etree.SubElement(description, 'Events',  Type='Graphic', NumberofEvents=str(numb
 #print(etree.tostring(xmldoc,pretty_print=True))  #send to stdout
 
 #and finally writeout to filesystem
-temp=etree.ElementTree(xmldoc)
-try: 
-    temp.write(outputFileName,pretty_print=True,xml_declaration=True, encoding='UTF-8')
-    print('\n Wrote: ' + '"' + outputFileName + '"')
-except:
-    print('Unspecified error: '+sys.exc_info()[0])
+def writeOutput():
+    temp=etree.ElementTree(xmldoc)
+    try: 
+        temp.write(outputFileName,pretty_print=True,xml_declaration=True, encoding='UTF-8')
+        print('\n Wrote: ' + '"' + outputFileName + '"')
+    except:
+        print('Unspecified error: '+sys.exc_info()[0])
+
+writeOutput()
