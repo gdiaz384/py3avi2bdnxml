@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<BDN xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Version="0.93" xsi:noNamespaceSchemaLocation="BD-03-006-0093b BDN File Format.xsd">
+  <Description>
+    <Name Content="" Title="Undefined"/>
+    <Language Code="en"/>
+    <Format DropFrame="false" FrameRate="23.976" VideoFormat="480p"/>
+    <Events ContentInTC="00:00:00:00" ContentOutTC="00:01:31:10" FirstEventInTC="00:00:16:18" LastEventOutTC="00:01:31:10" NumberofEvents="42" Type="Graphic"/>
+  </Description>
+  <Events>
+    <Event Forced="False" InTC="00:00:16:18" OutTC="00:00:18:07">
+      <Graphic Height="42" Width="563" X="142" Y="436">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00000.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:18:07" OutTC="00:00:19:12">
+      <Graphic Height="39" Width="563" X="142" Y="439">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00001.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:19:12" OutTC="00:00:19:19">
+      <Graphic Height="40" Width="547" X="150" Y="438">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00002.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:19:19" OutTC="00:00:21:05">
+      <Graphic Height="39" Width="547" X="150" Y="439">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00003.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:21:05" OutTC="00:00:21:14">
+      <Graphic Height="39" Width="547" X="150" Y="439">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00004.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:21:14" OutTC="00:00:21:15">
+      <Graphic Height="35" Width="435" X="206" Y="443">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00005.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:21:21" OutTC="00:00:26:22">
+      <Graphic Height="35" Width="387" X="230" Y="443">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00006.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:27:16" OutTC="00:00:32:11">
+      <Graphic Height="36" Width="259" X="294" Y="442">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00007.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:32:18" OutTC="00:00:34:15">
+      <Graphic Height="35" Width="387" X="230" Y="443">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00008.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:34:15" OutTC="00:00:35:12">
+      <Graphic Height="35" Width="403" X="222" Y="443">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00009.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:35:12" OutTC="00:00:38:00">
+      <Graphic Height="35" Width="403" X="222" Y="443">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00010.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:38:13" OutTC="00:00:42:20">
+      <Graphic Height="36" Width="291" X="278" Y="442">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00011.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:42:20" OutTC="00:00:43:05">
+      <Graphic Height="40" Width="291" X="278" Y="438">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00012.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:43:16" OutTC="00:00:44:00">
+      <Graphic Height="35" Width="515" X="166" Y="443">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00013.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:44:00" OutTC="00:00:45:01">
+      <Graphic Height="36" Width="515" X="166" Y="442">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00014.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:45:01" OutTC="00:00:45:17">
+      <Graphic Height="41" Width="531" X="158" Y="437">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00015.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:45:17" OutTC="00:00:46:00">
+      <Graphic Height="36" Width="531" X="158" Y="442">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00016.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:46:00" OutTC="00:00:49:11">
+      <Graphic Height="35" Width="531" X="158" Y="443">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00017.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:49:11" OutTC="00:00:50:00">
+      <Graphic Height="41" Width="515" X="166" Y="437">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00018.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:50:00" OutTC="00:00:51:14">
+      <Graphic Height="35" Width="515" X="166" Y="443">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00019.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:51:14" OutTC="00:00:52:00">
+      <Graphic Height="36" Width="531" X="158" Y="442">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00020.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:52:00" OutTC="00:00:52:22">
+      <Graphic Height="35" Width="531" X="158" Y="443">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00021.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:52:22" OutTC="00:00:53:06">
+      <Graphic Height="35" Width="515" X="166" Y="443">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00022.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:53:06" OutTC="00:00:53:07">
+      <Graphic Height="34" Width="499" X="174" Y="444">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00023.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:53:18" OutTC="00:00:54:01">
+      <Graphic Height="42" Width="115" X="366" Y="436">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00024.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:54:09" OutTC="00:00:55:21">
+      <Graphic Height="39" Width="227" X="310" Y="439">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00025.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:56:03" OutTC="00:00:56:17">
+      <Graphic Height="35" Width="531" X="158" Y="443">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00026.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:56:17" OutTC="00:00:57:00">
+      <Graphic Height="42" Width="547" X="150" Y="436">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00027.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:57:00" OutTC="00:00:57:12">
+      <Graphic Height="35" Width="531" X="158" Y="443">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00028.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:57:12" OutTC="00:00:59:00">
+      <Graphic Height="37" Width="531" X="158" Y="441">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00029.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:59:00" OutTC="00:00:59:14">
+      <Graphic Height="36" Width="531" X="158" Y="442">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00030.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:00:59:14" OutTC="00:01:00:02">
+      <Graphic Height="37" Width="531" X="158" Y="441">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00031.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:00:02" OutTC="00:01:00:03">
+      <Graphic Height="35" Width="531" X="158" Y="443">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00032.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:00:08" OutTC="00:01:05:00">
+      <Graphic Height="35" Width="531" X="158" Y="443">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00033.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:05:00" OutTC="00:01:05:00">
+      <Graphic Height="35" Width="531" X="158" Y="443">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00034.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:05:06" OutTC="00:01:06:19">
+      <Graphic Height="39" Width="243" X="302" Y="439">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00035.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:07:01" OutTC="00:01:08:08">
+      <Graphic Height="35" Width="211" X="318" Y="443">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00036.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:08:13" OutTC="00:01:11:00">
+      <Graphic Height="34" Width="339" X="254" Y="444">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00037.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:11:05" OutTC="00:01:12:00">
+      <Graphic Height="35" Width="259" X="294" Y="443">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00038.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:12:00" OutTC="00:01:13:06">
+      <Graphic Height="35" Width="275" X="286" Y="443">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00039.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:13:12" OutTC="00:01:19:05">
+      <Graphic Height="35" Width="339" X="254" Y="443">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00040.bmp</Graphic>
+    </Event>
+    <Event Forced="False" InTC="00:01:28:10" OutTC="00:01:31:10">
+      <Graphic Height="39" Width="131" X="358" Y="439">MAMORU! by Maho Tomita - Venus To Mamoru OP.orig.00041.bmp</Graphic>
+    </Event>
+  </Events>
+</BDN>
