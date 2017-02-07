@@ -34,10 +34,11 @@ import io                            #manipulate files (open/read/write/close)
 from io import IOBase     #test if variable is a file object (an "IOBase" object)
 from pathlib import Path  #override file in file system with another, experimental library
 from PIL import Image     #Pillow image library for checking image resolutions
+#import Image     #Pillow image library for checking image resolutions
 import pysrt                       #read input from subrip (.srt) files
 import decimal                 #improved precision for arithmetic operations
 from lxml import etree      #XML datastructure + I/O
-import copy                       #to deepcopy() srt object for fixing SRT quirk
+import copy                       #to deepcopy() SRT object for fixing SRT file quirk
 
 from decimal import ROUND_DOWN
 num=decimal.Decimal
@@ -332,6 +333,19 @@ def get_BDNXMLTime(funct_hours,funct_minutes,funct_seconds,real_milliseconds):
 def get_graphicDimensions(image_path):
     return Image.open(image_path, mode='r').size
 
+def rotateGraphic(image_path,counterclockwise):
+    Image.open(image_path, mode='r').rotate(counterclockwise, expand=1).save(image_path)
+
+#Image.Transpose(int) syntax, rotations are counterclockwise
+#1 = FLIP_TOP_BOTTOM
+#2 = ROTATE_90
+#3 = ROTATE_180
+#4 = ROTATE_270
+#5 = FLIP_LEFT_RIGHT + ROTATE_90
+#So transpose(5).transpose(4) = FLIP_LEFT_RIGHT
+def flipVerticalGraphic(image_path):
+    Image.open(image_path, mode='r').transpose(1).save(image_path)
+
 #--centered width, formula: source_frame_width-image_width)/2 = the number of x pixels to offset the image
 #same for both dialogue and and romaji
 def get_XOffset(functGraphicWidth):
@@ -471,16 +485,24 @@ def addToBDNXML(functSrtFile,typeOfInput):
                 graphicHeight=graphicDimensions[1]
                 graphicXOffset=get_XOffset(graphicWidth)
                 graphicYOffset=get_dialogueYOffset(graphicHeight)
+                #print('pie')
             if typeOfInput == 'romaji':
                 graphicWidth=graphicDimensions[0]
                 graphicHeight=graphicDimensions[1]
                 graphicXOffset=get_XOffset(graphicWidth)
-                graphicYOffset=get_romajiYOffset(graphicHeight)
+                graphicYOffset=get_romajiYOffset()
+                if processImages == True:
+                    flipVerticalGraphic(functSrtFile[i].text)
             if typeOfInput == 'kanji':
-                graphicWidth=graphicDimensions[1]  #processed Width
+                graphicWidth=graphicDimensions[1]  #proc essed Width
                 graphicHeight=graphicDimensions[0]   #processed Height
                 graphicXOffset=get_kanjiXOffset(graphicDimensions)
                 graphicYOffset=get_kanjiYOffset(graphicDimensions)
+                if processImages == True:
+                        if kanjiRight != True:
+                            rotateGraphic(functSrtFile[i].text,270)
+                        elif kanjiRight == True:
+                            rotateGraphic(functSrtFile[i].text,90)
 
             tempBDNXMLInTimeObject=get_BDNXMLTime(functSrtFile[i].start.hours,functSrtFile[i].start.minutes,functSrtFile[i].start.seconds,returnFractionalTime(functSrtFile[i].start.ordinal))
             inTime=tempBDNXMLInTimeObject[0]
@@ -507,8 +529,10 @@ def addToBDNXML(functSrtFile,typeOfInput):
             print('"' + functSrtFile[i].text + '"'+ ' does not exist or is malformed, skipping')
 
 #if only dialogue, add as dialogue, write out, quit
-if kanjiFileSpecified != True:
-    if romajiFileSpecified != True:
+#if kanjiFileSpecified != True:
+#    if romajiFileSpecified != True:
+if onlyRomaji !=True:
+    if onlyKanji != True:
         addToBDNXML(srtFile, 'dialogue')
 
 #if only romaji, add as romaji, write out, quit
