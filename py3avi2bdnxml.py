@@ -85,6 +85,7 @@ onlyKanji=command_Line_arguments.onlyKanji
 onlyRomaji=command_Line_arguments.onlyRomaji
 kanjiRight=command_Line_arguments.kanjiRight
 processImages=command_Line_arguments.enableImageProcessing
+preferLast=command_Line_arguments.preferLast
 debug=command_Line_arguments.debug
 dropFrameStatus=defaultDropFrameStatus
 
@@ -112,8 +113,8 @@ if command_Line_arguments.kanjiFile != None:
 
 romajiFileSpecified=False
 if command_Line_arguments.romajiFile != None:
+    romajiFile=command_Line_arguments.romajiFile
     if os.path.isfile(romajiFile) == True:
-        romajiFile=command_Line_arguments.romajiFile
         romajiFileSpecified=True
 
 #subtle bug in case user includes both -kf and input file
@@ -230,10 +231,9 @@ if debug == True:
     print("videoHeight: "+str(videoHeight))
     print("fpsRate after type conversion: "+str(fpsRate))
 
-#read input
+#read SRT input
 srtFile = pysrt.open(inputFileName, encoding=encodingType)
-#TODO: AVISubDetector borks the ending time of the last srt entry, so fix it here. -done
-#Re-time the last sub to end 3 seconds after it begins
+#Re-time the last sub to end 3 seconds after it begins due to AVISubDetector quirk
 tempSrtFile=copy.deepcopy(srtFile)
 #print('Full: '+str(srtFile[len(srtFile)-1]))
 tempSrtFile[len(tempSrtFile)-1].shift(seconds=3)
@@ -467,65 +467,125 @@ highestBDNXMLinTimeObject=0
 #parsed filename
 #add new Event below "events" tag
     #add Graphic tag with properties inside of event, text is parsed filename
+
+#listOffset
+def BDNXMLWorker(srtObject,typeOfInput,tempSrtImagePath='invalid'):
+    #global srtFile
+    #srtObject=srtObject
+    global numberOfEventsCounter
+    global highestBDNXMLinTimeObject
+    global lowestBDNXMLinTimeObject
+    global events
+    numberOfEventsCounter+=1
+    if tempSrtImagePath == 'invalid':
+        srtImagePath=srtObject.text
+    else:
+        srtImagePath=tempSrtImagePath
+    graphicDimensions=get_graphicDimensions(srtImagePath)
+    #replace functSrtFile[i].text  with srtImagePath
+    #print(srtImagePath)
+    #return
+    #srtObject=srtObject[listOffset]
+    #print (str(srtObject))
+    #return
+
+    if typeOfInput == 'dialogue':
+        graphicWidth=graphicDimensions[0]
+        graphicHeight=graphicDimensions[1]
+        graphicXOffset=get_XOffset(graphicWidth)
+        graphicYOffset=get_dialogueYOffset(graphicHeight)
+        #print('pie')
+    if typeOfInput == 'romaji':
+        graphicWidth=graphicDimensions[0]
+        graphicHeight=graphicDimensions[1]
+        graphicXOffset=get_XOffset(graphicWidth)
+        graphicYOffset=get_romajiYOffset()
+        if processImages == True:
+            flipVerticalGraphic(srtImagePath)
+    if typeOfInput == 'kanji':
+        graphicWidth=graphicDimensions[1]  #processed Width
+        graphicHeight=graphicDimensions[0]   #processed Height
+        graphicXOffset=get_kanjiXOffset(graphicDimensions)
+        graphicYOffset=get_kanjiYOffset(graphicDimensions)
+        if processImages == True:
+                if kanjiRight != True:
+                    rotateGraphic(srtImagePath,270)
+                elif kanjiRight == True:
+                    rotateGraphic(srtImagePath,90)
+    #print(srtObject)
+    tempBDNXMLInTimeObject=get_BDNXMLTime(srtObject.start.hours,srtObject.start.minutes,srtObject.start.seconds,returnFractionalTime(srtObject.start.ordinal))
+    inTime=tempBDNXMLInTimeObject[0]
+    tempBDNXMLOutTimeObject=get_BDNXMLTime(srtObject.end.hours,srtObject.end.minutes,srtObject.end.seconds,returnFractionalTime(srtObject.end.ordinal))
+    outTime=tempBDNXMLOutTimeObject[0]
+
+    if lowestBDNXMLinTimeObject == 0:
+        lowestBDNXMLinTimeObject=tempBDNXMLInTimeObject
+        highestBDNXMLinTimeObject=tempBDNXMLOutTimeObject
+        #print('pie')
+    if tempBDNXMLInTimeObject[1] < lowestBDNXMLinTimeObject[1]:
+        lowestBDNXMLinTimeObject=tempBDNXMLInTimeObject
+    if tempBDNXMLOutTimeObject[1] > highestBDNXMLinTimeObject[1]:
+        highestBDNXMLinTimeObject=tempBDNXMLOutTimeObject
+
+    parsedFilename=os.path.basename(srtImagePath)
+    tempEvent=etree.SubElement(events,'Event', Forced='False', InTC=inTime, OutTC=outTime)
+    tempGraphic=etree.SubElement(tempEvent,'Graphic', Width=str(graphicWidth), Height=str(graphicHeight), X=str(graphicXOffset), Y=str(graphicYOffset))
+    tempGraphic.text=parsedFilename
+    #print('pie')
+
 def addToBDNXML(functSrtFile,typeOfInput):
     for i in range(len(functSrtFile)):
-        global numberOfEventsCounter
-        global highestBDNXMLinTimeObject
-        global lowestBDNXMLinTimeObject
         #print('Full: '+str(functSrtFile[i]))
         #print('Text: '+functSrtFile[i].text)
         #if file i/o check, file exists, then process the item, else skip it
         if os.path.isfile(str(functSrtFile[i].text)) == True:
-            numberOfEventsCounter+=1
-            graphicDimensions=get_graphicDimensions(functSrtFile[i].text)
-
-            if typeOfInput == 'dialogue':
-                graphicWidth=graphicDimensions[0]
-                graphicHeight=graphicDimensions[1]
-                graphicXOffset=get_XOffset(graphicWidth)
-                graphicYOffset=get_dialogueYOffset(graphicHeight)
-                #print('pie')
-            if typeOfInput == 'romaji':
-                graphicWidth=graphicDimensions[0]
-                graphicHeight=graphicDimensions[1]
-                graphicXOffset=get_XOffset(graphicWidth)
-                graphicYOffset=get_romajiYOffset()
-                if processImages == True:
-                    flipVerticalGraphic(functSrtFile[i].text)
-            if typeOfInput == 'kanji':
-                graphicWidth=graphicDimensions[1]  #proc essed Width
-                graphicHeight=graphicDimensions[0]   #processed Height
-                graphicXOffset=get_kanjiXOffset(graphicDimensions)
-                graphicYOffset=get_kanjiYOffset(graphicDimensions)
-                if processImages == True:
-                        if kanjiRight != True:
-                            rotateGraphic(functSrtFile[i].text,270)
-                        elif kanjiRight == True:
-                            rotateGraphic(functSrtFile[i].text,90)
-
-            tempBDNXMLInTimeObject=get_BDNXMLTime(functSrtFile[i].start.hours,functSrtFile[i].start.minutes,functSrtFile[i].start.seconds,returnFractionalTime(functSrtFile[i].start.ordinal))
-            inTime=tempBDNXMLInTimeObject[0]
-            tempBDNXMLOutTimeObject=get_BDNXMLTime(functSrtFile[i].end.hours,functSrtFile[i].end.minutes,functSrtFile[i].end.seconds,returnFractionalTime(functSrtFile[i].end.ordinal))
-            outTime=tempBDNXMLOutTimeObject[0]
-
-            if lowestBDNXMLinTimeObject == 0:
-                lowestBDNXMLinTimeObject=tempBDNXMLInTimeObject
-                highestBDNXMLinTimeObject=tempBDNXMLOutTimeObject
-                #print('pie')
-            if tempBDNXMLInTimeObject[1] < lowestBDNXMLinTimeObject[1]:
-                lowestBDNXMLinTimeObject=tempBDNXMLInTimeObject
-            if tempBDNXMLOutTimeObject[1] > highestBDNXMLinTimeObject[1]:
-                highestBDNXMLinTimeObject=tempBDNXMLOutTimeObject
-
-            parsedFilename=os.path.basename(functSrtFile[i].text)
-            tempEvent=etree.SubElement(events,'Event', Forced='False', InTC=inTime, OutTC=outTime)
-            tempGraphic=etree.SubElement(tempEvent,'Graphic', Width=str(graphicWidth), Height=str(graphicHeight), X=str(graphicXOffset), Y=str(graphicYOffset))
-            tempGraphic.text=parsedFilename
-
+            BDNXMLWorker(functSrtFile[i],typeOfInput)
         elif os.path.isfile(str(functSrtFile[i].text)) == False:
             #this can also fail on malformed paths, like where srt[23].text is actually 2 concatenated file paths linked with a \n
             #TODO: make this code more flexible to account for above scenario
-            print('"' + functSrtFile[i].text + '"'+ ' does not exist or is malformed, skipping')
+            #first take the string and determine if there are end line characters  in it
+            #if so, then might be dealing with a joint one
+                #then split the string into sub strings based upon each endline character
+                #check the first and last entries to see if they are files
+                #if the first is a file, but the second is not, include the second
+                #if the second is a file, but the first is not, include the first
+                #if neither is a file print error message
+                #if both are files, then check with preferLast variable to see which to include
+            if str(functSrtFile[i].text).count('\n') >= 1:
+                srtSplitList=str(functSrtFile[i].text).split('\n')
+                #print(srtSplitList[0])
+
+                if os.path.isfile(srtSplitList[0]) == True:
+                    firstSRTValid=True
+                else:
+                    firstSRTValid=False
+                if os.path.isfile(srtSplitList[-1]) == True:
+                    lastSRTValid=True
+                else:
+                    lastSRTValid=False
+
+                if firstSRTValid == True:
+                    if lastSRTValid == False:
+                        #then include first one
+                        BDNXMLWorker(functSrtFile[i], typeOfInput,srtSplitList[0])
+                if firstSRTValid == False:
+                    if lastSRTValid ==True:
+                        #then include last one
+                        BDNXMLWorker(functSrtFile[i], typeOfInput,srtSplitList[-1])
+                if firstSRTValid == False:
+                    if lastSRTValid == False:
+                        print('"' + functSrtFile[i].text + '"'+ ' does not exist or is malformed, skipping')
+                if firstSRTValid == True:
+                    if lastSRTValid == True:
+                        #then check with preferLast to see which to include
+                        if preferLast != True:
+                            #include first one
+                            BDNXMLWorker(functSrtFile[i], typeOfInput,srtSplitList[0])
+                        elif preferLast == True:
+                            BDNXMLWorker(functSrtFile[i], typeOfInput,srtSplitList[-1])
+                            #include last one
+            else:
+                print('"' + functSrtFile[i].text + '"'+ ' does not exist or is malformed, skipping')
 
 #if only dialogue, add as dialogue, write out, quit
 #if kanjiFileSpecified != True:

@@ -30,7 +30,7 @@ py3avi2bdnxml.py converts the imageTimings.srt produced by AVISubDetector to a B
     Hint: Use AVIsynth's spline64resize()
 2. Load .avi or .avs file with AVISubDetector (use 32-bit avisynth or avi2fs)
 3. Use the following settings for AVISubDetector:
-![screenshot1](pics/AVISubDetector_settings1.png)
+    ![screenshot1](pics/AVISubDetector_settings1.png)
 4. press "Start" and wait a while.
 5. When done, close AVISubDetector.
 6. Process the resulting .SRT into py3avi2bdnxml using the appropriate settings.
@@ -44,7 +44,6 @@ py3avi2bdnxml.py converts the imageTimings.srt produced by AVISubDetector to a B
     Optional: specify a delay timing for syncing purposes.
 
 ## Example Usage Settings:
-
 
 Note: [ ] means optional.
 
