@@ -17,7 +17,7 @@ python py3avi2bdnxml.py imageTimings.srt -q 480p -o output.xml
 python py3avi2bdnxml.py imageTimings.srt -q 480p --yOffset 4 -o output.xml
 
 Current version: 0.1-beta
-Last Modified: 07Feb17
+Last Modified: 11Feb17
 License: any
 
 ##stop reading now##
