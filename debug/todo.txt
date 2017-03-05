@@ -1,5 +1,11 @@
-﻿- output only "cleaned" SRT (--removequirks, -rq) -Important! -only half done
-   - (modify lastsubtitle + --keepfirst, -kf, --keeplast, -kl)
+﻿- split yoffset to dialogue offset and romaji offset
+- if romaji/kanji file was specified and does not exist then error out
+- old bug: remove duplicate dialogue if romaji was specified
+- add multifile processing capabilities -partial
+    - add to single data structure
+    - sort based upon start time (tree)
+- output only "cleaned" SRT (--removequirks, -rq) -Important! -only half done
+   - (modify lastsubtitle + --keepfirst, -kf, --keeplast, -kl), keep full path or not
 - support Romaji and Kanji only modes (--onlyKanji, -ok, --onlyRomaji, -or) -done, need to test
    - change pixelsfrombottom to y offset --yoffset -yo   -done
    - add x offset (only used for Kanji mode), --xoffset -xo   -done
@@ -8,7 +14,6 @@
    - Kanji should be centered -need to test
 
 Long term:
-- add multifile processing capabilities
 - add additional FPS options
 
 Done:
