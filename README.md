@@ -127,8 +127,8 @@ Optional Argument | Description
 ## Download and Install Guide:
 
 ```
-Latest Version: 0.1-beta
-In Development: 0.1-rc1 Open an issue for bugs, feature or compile requests if something needs updating.
+Latest Version: 0.2-alpha
+In Development: 0.2-beta Open an issue for bugs, feature or compile requests if something needs updating.
 ```
 1. Click [here](//github.com/gdiaz384/py3avi2bdnxml/releases) or on "releases" at the top to download the latest version.
 2. Extract py3avi2bdnxml.exe from the archive of your OS/architecture.
@@ -164,6 +164,6 @@ In Development: 0.1-rc1 Open an issue for bugs, feature or compile requests if s
 
 ## License:
 
-Script (.py): Pick your License (any), Examples: GPL (any) or BSD (any) or MIT/Apache.
-Binaries (.exe): GPL 3.0
-Also: The binaries in workflow.zip each have their own licenses.
+- Script (.py): Pick your License (any), Examples: GPL (any) or BSD (any) or MIT/Apache.
+- Binaries (.exe): GPL 3.0
+- Also: The binaries in workflow.zip each have their own licenses.

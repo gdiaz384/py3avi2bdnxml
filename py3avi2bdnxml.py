@@ -16,8 +16,8 @@ python py3avi2bdnxml.py imageTimings.srt -q 480p
 python py3avi2bdnxml.py imageTimings.srt -q 480p -o output.xml
 python py3avi2bdnxml.py imageTimings.srt -q 480p --yOffset 4 -o output.xml
 
-Current version: 0.1-beta
-Last Modified: 11Feb17
+Current version: 0.2-alpha
+Last Modified: 06Mar17
 License: any
 
 ##stop reading now##
@@ -55,11 +55,11 @@ defaultFPS=num(24000/1001)
 defaultDropFrameStatus='false'
 
 #set static internal use variables
-currentVersion='v0.1 - 02Feb17'
+currentVersion='v0.2 - 06Mar17'
 usageHelp='\n CorrectUsage: \n py3avi2bdnxml input.srt\n py3avi2bdnxml input.srt -o output.xml\n py3avi2bdnxml input.srt [-q 480p] [-yo 2] [-o output.xml]'
 
 #add command line options
-command_Line_parser=argparse.ArgumentParser(description='py3avi2bdnxml converts the imageTimings.srt produced by AVISubDetector\Nto a BDN XML file that can be read by BDSup2Sub++.' + usageHelp)
+command_Line_parser=argparse.ArgumentParser(description='py3avi2bdnxml converts the imageTimings.srt produced by AVISubDetector \n to a BDN XML file that can be read by BDSup2Sub++.' + usageHelp)
 command_Line_parser.add_argument("-df", "--dialogueFile", help="specify a dialogue file as input", type=str)
 command_Line_parser.add_argument("-df2", "--dialogueFile2", help="specify an additional dialogue input file", type=str)
 command_Line_parser.add_argument("-df3", "--dialogueFile3", help="specify an additional dialogue input file", type=str)
@@ -111,32 +111,32 @@ command_Line_parser.add_argument("-d", "--debug", help="display calculated setti
 #parse command line settings
 command_Line_arguments=command_Line_parser.parse_args()
 
-dialogueFileXOffset=command_Line_arguments.dialogueFile-xOffset
-dialogueFile2XOffset=command_Line_arguments.dialogueFile2-xOffset
-dialogueFile3XOffset=command_Line_arguments.dialogueFile3-xOffset
-dialogueFile4XOffset=command_Line_arguments.dialogueFile4-xOffset
-dialogueFileYOffset=command_Line_arguments.dialogueFile-yOffset
-dialogueFile2YOffset=command_Line_arguments.dialogueFile2-yOffset
-dialogueFile3YOffset=command_Line_arguments.dialogueFile3-yOffset
-dialogueFile4YOffset=command_Line_arguments.dialogueFile4-yOffset
+dialogueFileXOffset=command_Line_arguments.dialogueFile_xOffset
+dialogueFile2XOffset=command_Line_arguments.dialogueFile2_xOffset
+dialogueFile3XOffset=command_Line_arguments.dialogueFile3_xOffset
+dialogueFile4XOffset=command_Line_arguments.dialogueFile4_xOffset
+dialogueFileYOffset=command_Line_arguments.dialogueFile_yOffset
+dialogueFile2YOffset=command_Line_arguments.dialogueFile2_yOffset
+dialogueFile3YOffset=command_Line_arguments.dialogueFile3_yOffset
+dialogueFile4YOffset=command_Line_arguments.dialogueFile4_yOffset
 
-romajiFileXOffset=command_Line_arguments.romajiFile-xOffset
-romajiFile2XOffset=command_Line_arguments.romajiFile2-xOffset
-romajiFile3XOffset=command_Line_arguments.romajiFile3-xOffset
-romajiFile4XOffset=command_Line_arguments.romajiFile4-xOffset
-romajiFileYOffset=command_Line_arguments.romajiFile-yOffset
-romajiFile2YOffset=command_Line_arguments.romajiFile2-yOffset
-romajiFile3YOffset=command_Line_arguments.romajiFile3-yOffset
-romajiFile4YOffset=command_Line_arguments.romajiFile4-yOffset
+romajiFileXOffset=command_Line_arguments.romajiFile_xOffset
+romajiFile2XOffset=command_Line_arguments.romajiFile2_xOffset
+romajiFile3XOffset=command_Line_arguments.romajiFile3_xOffset
+romajiFile4XOffset=command_Line_arguments.romajiFile4_xOffset
+romajiFileYOffset=command_Line_arguments.romajiFile_yOffset
+romajiFile2YOffset=command_Line_arguments.romajiFile2_yOffset
+romajiFile3YOffset=command_Line_arguments.romajiFile3_yOffset
+romajiFile4YOffset=command_Line_arguments.romajiFile4_yOffset
 
-kanjiFileXOffset=command_Line_arguments.kanjiFile-xOffset
-kanjiFile2XOffset=command_Line_arguments.kanjiFile2-xOffset
-kanjiFile3XOffset=command_Line_arguments.kanjiFile3-xOffset
-kanjiFile4XOffset=command_Line_arguments.kanjiFile4-xOffset
-kanjiFileYOffset=command_Line_arguments.kanjiFile-yOffset
-kanjiFile2YOffset=command_Line_arguments.kanjiFile2-yOffset
-kanjiFile3YOffset=command_Line_arguments.kanjiFile3-yOffset
-kanjiFile4YOffset=command_Line_arguments.kanjiFile4-yOffset
+kanjiFileXOffset=command_Line_arguments.kanjiFile_xOffset
+kanjiFile2XOffset=command_Line_arguments.kanjiFile2_xOffset
+kanjiFile3XOffset=command_Line_arguments.kanjiFile3_xOffset
+kanjiFile4XOffset=command_Line_arguments.kanjiFile4_xOffset
+kanjiFileYOffset=command_Line_arguments.kanjiFile_yOffset
+kanjiFile2YOffset=command_Line_arguments.kanjiFile2_yOffset
+kanjiFile3YOffset=command_Line_arguments.kanjiFile3_yOffset
+kanjiFile4YOffset=command_Line_arguments.kanjiFile4_yOffset
 
 #check to make sure any dialogue.srt, romaji.srt, and kanji.srt files specified actually exist
 if command_Line_arguments.dialogueFile == None:
@@ -145,8 +145,9 @@ if command_Line_arguments.dialogueFile == None:
             sys.exit('\n Error: Please specify at least one input file. '+ usageHelp)
 
 specifiedFiles=[]
+#specifiedFiles[i]=[dialogueFilePath,typeOfInput,fileXOffset,fileYOffset]
 
- if command_Line_arguments.dialogueFile != None:
+if command_Line_arguments.dialogueFile != None:
     dialogueFilePath=command_Line_arguments.dialogueFile
     specifiedFiles.append([dialogueFilePath,'dialogue',dialogueFileXOffset,dialogueFileYOffset])
     if os.path.isfile(dialogueFilePath) != True:
@@ -167,7 +168,7 @@ if command_Line_arguments.dialogueFile4 != None:
     if os.path.isfile(dialogueFile4Path) != True:
         sys.exit('\n Error: Unable to find SRT file "' + dialogueFile4Path + '"' + usageHelp)
 
- if command_Line_arguments.romajiFile != None:
+if command_Line_arguments.romajiFile != None:
     romajiFilePath=command_Line_arguments.romajiFile
     specifiedFiles.append([romajiFilePath,'romaji',romajiFileXOffset,romajiFileYOffset])
     if os.path.isfile(romajiFilePath) != True:
@@ -221,16 +222,16 @@ kanjiRight=command_Line_arguments.kanjiRight
 if command_Line_arguments.output != None:
     outputFileName=command_Line_arguments.output
 else:
-    outputFileName=os.path.splitext(inputFileName)[0]+ ".xml"
+    outputFileName=os.path.splitext(specifiedFiles[0][0])[0]+ ".xml"
     
 encodingType=command_Line_arguments.encoding
 debug=command_Line_arguments.debug
 dropFrameStatus=defaultDropFrameStatus
 
 if debug == True:
-    print("inputFileName="+inputFileName)
+    #print("inputFileName="+inputFileName)
     print("quality="+str(quality))
-    print("yOffset="+str(yOffset))
+    #print("yOffset="+str(yOffset))
     print("outputFileName="+outputFileName)
     print("fpsRate="+str(fpsRate))
 
@@ -313,7 +314,7 @@ except decimal.InvalidOperation:  #occurs when converting string with / to decim
 #except ValueError: #occurs when converting string with / to float ('24000/1001'-> float)
 #    print(fpsRate + 'raised a value error')
 
-for i in range(0,len(specifiedFiles),1)
+for i in range(len(specifiedFiles)):
     if specifiedFiles[i][1] == 'dialogue':
         #check yOffset
         # valid range is [2-1076] for a 2 pixel height image
@@ -346,24 +347,41 @@ if debug == True:
     print("videoHeight: "+str(videoHeight))
     print("fpsRate after type conversion: "+str(fpsRate))
 
-#read input files into SRT objects and fix AVISubDetector bug
-for i in range(0,len(specifiedFiles),1)
-    specifiedFiles[i][0] = pysrt.open(specifiedFiles[i][0], encoding=encodingType)
+#read input files into SRT objects and fix AVISubDetector bug where last subtitle does not end promptly
+#print('pie')
+srtObjectsList = []
+for i in range(len(specifiedFiles)):
+    #global srtObjectsList
+    #print('pie')
+    #print(specifiedFiles[i][0])
+    #print('pysrt.open(specifiedFiles[i][0], encoding=encodingType)' )
+    srtObjectsList.append([pysrt.open(specifiedFiles[i][0], encoding=encodingType)])
+    #print(srtObjectsList[i][0])
     #Re-time the last sub to end 3 seconds after it begins due to AVISubDetector quirk
-    tempSrtFile=copy.deepcopy(specifiedFiles[i][0])
-    #print('Full: '+str(specifiedFiles[i][0][len(srtFile)-1]))
+    tempSrtFile=copy.deepcopy(srtObjectsList[i][0])
+    #print(len(tempSrtFile))
+    #print('Full: '+str(srtObjectsList[i][0][len(srtObjectsList[i][0])-1]))
     tempSrtFile[len(tempSrtFile)-1].shift(seconds=3)
-    specifiedFiles[i][0][len(specifiedFiles[i][0])-1].end=tempSrtFile[len(tempSrtFile)-1].start
-    #srtFile[len(srtFile)-1].start=tempLastSrtEntry
-    #print('Full: '+str(tempSrtFile[len(srtFile)-1]))  #print temporary object
-    #print('Full: '+str(srtFile[len(srtFile)-1]))            #print main object
+    srtObjectsList[i][0][len(srtObjectsList[i][0])-1].end=tempSrtFile[len(tempSrtFile)-1].start
+    #srtObjectsList[len(srtObjectsList)-1].start=tempLastSrtEntry
+    #print('Full: '+str(tempSrtFile[len(srtObjectsList)-1]))  #print temporary object
+    #print('Full: '+str(srtObjectsList[len(srtObjectsList)-1]))            #print main object
+    #print(str(srtObjectsList))
 
+#print(str(len(specifiedFiles)))
+#print(str(specifiedFiles))
+#print(str(len(srtObjectsList)))
+#print(str(srtObjectsList))
+
+if len(specifiedFiles) != len(srtObjectsList):
+    sys.exit('\n Error: Unspecified')
+ 
 #if romajiFileSpecified == True:
 #    romajiSrtFile=pysrt.open(romajiFile, encoding=encodingType)
 #    tempSrtFile=copy.deepcopy(romajiSrtFile)
 #    tempSrtFile[len(tempSrtFile)-1].shift(seconds=3)
 #    romajiSrtFile[len(romajiSrtFile)-1].end=tempSrtFile[len(tempSrtFile)-1].start
-    
+
 #if kanjiFileSpecified == True:
 #    kanjiSrtFile = pysrt.open(kanjiFile, encoding=encodingType)
 #    tempSrtFile=copy.deepcopy(kanjiSrtFile)
@@ -371,32 +389,32 @@ for i in range(0,len(specifiedFiles),1)
 #    kanjiSrtFile[len(kanjiSrtFile)-1].end=tempSrtFile[len(tempSrtFile)-1].start
 
 #List full object contents + attributes
-#for attr, value in srtFile.__dict__.items():
+#for attr, value in srtObjectsList.__dict__.items():
 #    print(attr, value)
-#for attr, value in srtFile[0].__dict__.items():
+#for attr, value in srtObjectsList[0].__dict__.items():
 #    print(attr, value)
-#for attr, value in srtFile[0].text.__dict__.items(): #error
-#for attr, value in srtFile[0].start.__dict__.items():
+#for attr, value in srtObjectsList[0].text.__dict__.items(): #error
+#for attr, value in srtObjectsList[0].start.__dict__.items():
 #    print(attr, value)
-#for attr, value in srtFile[0].start.ordinal.__dict__.items(): #error
+#for attr, value in srtObjectsList[0].start.ordinal.__dict__.items(): #error
 
 #List 1 by 1
-#print('Length: ' + str(len(srtFile)))
-#print('Full: '+str(srtFile[0]))
-#print('Text: '+srtFile[0].text)
-#print('Start: '+str(srtFile[0].start))
-#print('Start Minutes: '+str(srtFile[0].start.minutes))
-#print('Start Seconds: '+str(srtFile[0].start.seconds))
-#print('End: '+str(srtFile[0].end))
-#print('End Hour: '+str(srtFile[0].end.hours))
-#print('End Minutes: '+str(srtFile[0].end.minutes))
-#print('End Seconds: '+str(srtFile[0].end.seconds))
+#print('Length: ' + str(len(srtObjectsList)))
+#print('Full: '+str(srtObjectsList[0]))
+#print('Text: '+srtObjectsList[0].text)
+#print('Start: '+str(srtObjectsList[0].start))
+#print('Start Minutes: '+str(srtObjectsList[0].start.minutes))
+#print('Start Seconds: '+str(srtObjectsList[0].start.seconds))
+#print('End: '+str(srtObjectsList[0].end))
+#print('End Hour: '+str(srtObjectsList[0].end.hours))
+#print('End Minutes: '+str(srtObjectsList[0].end.minutes))
+#print('End Seconds: '+str(srtObjectsList[0].end.seconds))
 
-#returnFractionalTime(srtFile[0].start.ordinal)  #works
-#returnFractionalTime(srtFile[0].start) #invalid
+#getFractionalTime(srtObjectsList[0].start.ordinal)  #works
+#getFractionalTime(srtObjectsList[0].start) #invalid
 
 #add missing method, takes strobject.start.ordinal or strobject.end.ordinal
-def returnFractionalTime(x):
+def getFractionalTime(x):
     return x % 1000
 
 millisecondsPerHour=3600000
@@ -461,37 +479,38 @@ def rotateGraphic(image_path,counterclockwise):
 def flipVerticalGraphic(image_path):
     Image.open(image_path, mode='r').transpose(1).save(image_path)
 
+#Todo: modify values with distortion ratio for better default placement in 3:4 video
 #--centered width, formula: source_frame_width-image_width)/2 = the number of x pixels to offset the image
 #same for both dialogue and and romaji
-def get_XOffset(functGraphicWidth):
-    return int((videoWidth-functGraphicWidth)/2)
+def get_XOffset(functGraphicWidth,fileXOffset):
+    return int((videoWidth-functGraphicWidth)/2)+fileXOffset
 
 #--dialogueYOffset, formula: source_frame_height-image_height-yOffset  = the number
-def get_dialogueYOffset(functGraphicHeight):
-    return videoHeight-functGraphicHeight-yOffset 
+def get_dialogueYOffset(functGraphicHeight,fileYOffset):
+    return videoHeight-functGraphicHeight-fileYOffset
 
 #--romajiYOffset, formula: return yoffset
-def get_romajiYOffset():
-    return yOffset
+def get_romajiYOffset(fileYOffset):
+    return fileYOffset
 
 #--kanjiXOffset, Calculate prior to fixing dimensions, so imageHeight is actually imageWidth
 #check if -kr is enabled
-def get_kanjiXOffset(graphicDimensions):
+def get_kanjiXOffset(graphicDimensions,fileXOffset):
     #graphicDimensions[0] = unprocessed width
     #graphicDimensions[1] = unprocessed height
     if kanjiRight != True:
-        return xOffset
+        return fileXOffset
     elif kanjiRight == True:
         #full width - graphicWidth-offset
-        return  videoWidth-graphicDimensions[1]-xOffset
+        return videoWidth-graphicDimensions[1]-fileXOffset
 
 #--kanjiYOffset, Calculate prior to fixing dimensions, so imageWidth is actually imageHeight
 #always centered along Y
-def get_kanjiYOffset(graphicDimensions):
+def get_kanjiYOffset(graphicDimensions,fileYOffset):
     #graphicDimensions[0] = unprocessed width
     #graphicDimensions[1] = unprocessed height
     #(videoHeight-imageheight)/2
-    return int((videoHeight-graphicDimensions[0])/2)
+    return int((videoHeight-graphicDimensions[0])/2)+fileYOffset
 
 #debug code
 #myFilePath=r'C:\Users\User\Desktop\py3avi2bdnxml_workspace\media\Inuyasha\SubPic\[MogNAV][Karaoke_ED_07]Inu_Yasha_-_Amuro_Namie_-_Come[8D874604].orig.00000.bmp'
@@ -509,35 +528,10 @@ def get_kanjiYOffset(graphicDimensions):
 #get_BDNXMLTime(1,23,50,234)
 #get_BDNXMLTime(1,24,8,710)
 
-#lxml template
-#from lxml import etree 
-#to create
-#html = etree.Element("html")
-#add child elements, with reference available later
-#body = etree.SubElement(html, "body")
-#child2 = etree.SubElement(html, "child2")
-#child3 = etree.SubElement(html, "child3")
-#body.text = "TEXT"  invalid(?)
-#paragraph= etree.SubElement(body,"p")
-#paragraph.text="Hello"
-#etree.tostring(html)  #string, can be written using regular IO library
-#to write
-#etree.ElementTree(etree.XML('<hi/>')).write('temp.xml',xml_declaration=True, encoding='UTF-8')
-#or
-#temp=etree.ElementTree(xmldoc)
-#temp.write('output.xml',pretty_print=True,xml_declaration=True, encoding='UTF-8')
-
 
 #random variable declarations
-numberOfEventsCounter=0
-lowestBDNXMLinTimeObject=0
-highestBDNXMLinTimeObject=0
-
-#try to add to xml
-#if only dialogue, add as dialogue, write out, quit
-#if only romaji, add as romaji, write out, quit
-#if only kanji, add as kani, write out, quit
-#if combined...
+eventsList=[]
+#eventsList[i]=[parsedFilename,totalMilliseconds,inTime,outTime,graphicWidth,graphicHeight,graphicXOffset,graphicYOffset]
 
 #get 
 #image width
@@ -549,18 +543,15 @@ highestBDNXMLinTimeObject=0
 #out time
     #convert to bdxml
 #parsed filename
-#add new Event below "events" tag
+#add new Event below <events> tag
     #add Graphic tag with properties inside of event, text is parsed filename
 
 #listOffset
-def BDNXMLWorker(srtObject,typeOfInput,tempSrtImagePath='invalid'):
-    #global srtFile
+def parseEvent(srtObject,typeOfInput,fileXOffset,fileYOffset,tempSrtImagePath='invalid'):
+    #global srtObjectsList
     #srtObject=srtObject
-    global numberOfEventsCounter
-    global highestBDNXMLinTimeObject
-    global lowestBDNXMLinTimeObject
-    global events
-    numberOfEventsCounter+=1
+    #global eventsList
+
     if tempSrtImagePath == 'invalid':
         srtImagePath=srtObject.text
     else:
@@ -576,57 +567,53 @@ def BDNXMLWorker(srtObject,typeOfInput,tempSrtImagePath='invalid'):
     if typeOfInput == 'dialogue':
         graphicWidth=graphicDimensions[0]
         graphicHeight=graphicDimensions[1]
-        graphicXOffset=get_XOffset(graphicWidth)
-        graphicYOffset=get_dialogueYOffset(graphicHeight)
+        graphicXOffset=get_XOffset(graphicWidth,fileXOffset)
+        graphicYOffset=get_dialogueYOffset(graphicHeight,fileYOffset)
         #print('pie')
     if typeOfInput == 'romaji':
         graphicWidth=graphicDimensions[0]
         graphicHeight=graphicDimensions[1]
-        graphicXOffset=get_XOffset(graphicWidth)
-        graphicYOffset=get_romajiYOffset()
+        graphicXOffset=get_XOffset(graphicWidth,fileXOffset)
+        graphicYOffset=get_romajiYOffset(fileYOffset)
         if processImages == True:
             flipVerticalGraphic(srtImagePath)
     if typeOfInput == 'kanji':
         graphicWidth=graphicDimensions[1]  #processed Width
         graphicHeight=graphicDimensions[0]   #processed Height
-        graphicXOffset=get_kanjiXOffset(graphicDimensions)
-        graphicYOffset=get_kanjiYOffset(graphicDimensions)
+        graphicXOffset=get_kanjiXOffset(graphicDimensions,fileXOffset)
+        graphicYOffset=get_kanjiYOffset(graphicDimensions,fileYOffset)
         if processImages == True:
                 if kanjiRight != True:
                     rotateGraphic(srtImagePath,270)
                 elif kanjiRight == True:
                     rotateGraphic(srtImagePath,90)
     #print(srtObject)
-    tempBDNXMLInTimeObject=get_BDNXMLTime(srtObject.start.hours,srtObject.start.minutes,srtObject.start.seconds,returnFractionalTime(srtObject.start.ordinal))
+    tempBDNXMLInTimeObject=get_BDNXMLTime(srtObject.start.hours,srtObject.start.minutes,srtObject.start.seconds,getFractionalTime(srtObject.start.ordinal))
     inTime=tempBDNXMLInTimeObject[0]
-    tempBDNXMLOutTimeObject=get_BDNXMLTime(srtObject.end.hours,srtObject.end.minutes,srtObject.end.seconds,returnFractionalTime(srtObject.end.ordinal))
+    totalMilliseconds=tempBDNXMLInTimeObject[1]
+    tempBDNXMLOutTimeObject=get_BDNXMLTime(srtObject.end.hours,srtObject.end.minutes,srtObject.end.seconds,getFractionalTime(srtObject.end.ordinal))
     outTime=tempBDNXMLOutTimeObject[0]
 
-    if lowestBDNXMLinTimeObject == 0:
-        lowestBDNXMLinTimeObject=tempBDNXMLInTimeObject
-        highestBDNXMLinTimeObject=tempBDNXMLOutTimeObject
-        #print('pie')
-    if tempBDNXMLInTimeObject[1] < lowestBDNXMLinTimeObject[1]:
-        lowestBDNXMLinTimeObject=tempBDNXMLInTimeObject
-    if tempBDNXMLOutTimeObject[1] > highestBDNXMLinTimeObject[1]:
-        highestBDNXMLinTimeObject=tempBDNXMLOutTimeObject
-
     parsedFilename=os.path.basename(srtImagePath)
-    tempEvent=etree.SubElement(events,'Event', Forced='False', InTC=inTime, OutTC=outTime)
-    tempGraphic=etree.SubElement(tempEvent,'Graphic', Width=str(graphicWidth), Height=str(graphicHeight), X=str(graphicXOffset), Y=str(graphicYOffset))
-    tempGraphic.text=parsedFilename
+    
+    #append event to event list
+    #eventsList[i]=[parsedFilename,totalMilliseconds,inTime,outTime,graphicWidth,graphicHeight,graphicXOffset,graphicYOffset]
+    eventsList.append([parsedFilename,totalMilliseconds,inTime,outTime,graphicWidth,graphicHeight,graphicXOffset,graphicYOffset])
+    
+    #tempEvent=etree.SubElement(events,'Event', Forced='False', InTC=inTime, OutTC=outTime)
+    #tempGraphic=etree.SubElement(tempEvent,'Graphic', Width=str(graphicWidth), Height=str(graphicHeight), X=str(graphicXOffset), Y=str(graphicYOffset))
+    #tempGraphic.text=parsedFilename
     #print('pie')
-
-def addToBDNXML(functSrtFile,typeOfInput):
+    
+def addToEventList(functSrtFile,typeOfInput,fileXOffset,fileYOffset):
     for i in range(len(functSrtFile)):
         #print('Full: '+str(functSrtFile[i]))
         #print('Text: '+functSrtFile[i].text)
         #if file i/o check, file exists, then process the item, else skip it
         if os.path.isfile(str(functSrtFile[i].text)) == True:
-            BDNXMLWorker(functSrtFile[i],typeOfInput)
+            parseEvent(functSrtFile[i],typeOfInput,fileXOffset,fileYOffset)
         elif os.path.isfile(str(functSrtFile[i].text)) == False:
             #this can also fail on malformed paths, like where srt[23].text is actually 2 concatenated file paths linked with a \n
-            #TODO: make this code more flexible to account for above scenario
             #first take the string and determine if there are end line characters  in it
             #if so, then might be dealing with a joint one
                 #then split the string into sub strings based upon each endline character
@@ -651,11 +638,11 @@ def addToBDNXML(functSrtFile,typeOfInput):
                 if firstSRTValid == True:
                     if lastSRTValid == False:
                         #then include first one
-                        BDNXMLWorker(functSrtFile[i], typeOfInput,srtSplitList[0])
+                        parseEvent(functSrtFile[i], typeOfInput,fileXOffset,fileYOffset,srtSplitList[0])
                 if firstSRTValid == False:
                     if lastSRTValid ==True:
                         #then include last one
-                        BDNXMLWorker(functSrtFile[i], typeOfInput,srtSplitList[-1])
+                        parseEvent(functSrtFile[i], typeOfInput,fileXOffset,fileYOffset,srtSplitList[-1])
                 if firstSRTValid == False:
                     if lastSRTValid == False:
                         print('"' + functSrtFile[i].text + '"'+ ' does not exist or is malformed, skipping')
@@ -664,53 +651,36 @@ def addToBDNXML(functSrtFile,typeOfInput):
                         #then check with preferLast to see which to include
                         if preferLast != True:
                             #include first one
-                            BDNXMLWorker(functSrtFile[i], typeOfInput,srtSplitList[0])
+                            parseEvent(functSrtFile[i], typeOfInput,fileXOffset,fileYOffset,srtSplitList[0])
                         elif preferLast == True:
-                            BDNXMLWorker(functSrtFile[i], typeOfInput,srtSplitList[-1])
+                            parseEvent(functSrtFile[i], typeOfInput,fileXOffset,fileYOffset,srtSplitList[-1])
                             #include last one
             else:
                 print('"' + functSrtFile[i].text + '"'+ ' does not exist or is malformed, skipping')
+    #subs.save('other/path.srt', encoding='utf-8')
 
-#if only dialogue, add as dialogue, write out, quit
-#if kanjiFileSpecified != True:
-#    if romajiFileSpecified != True:
-if onlyRomaji !=True:
-    if onlyKanji != True:
-        addToBDNXML(srtFile, 'dialogue')
 
-#if only romaji, add as romaji, write out, quit
-if onlyRomaji == True:
-    addToBDNXML(srtFile, 'romaji')
+#specifiedFiles[i]=[dialogueFilePath,typeOfInput,fileXOffset,fileYOffset]
+for i in range(len(srtObjectsList)):
+    addToEventList(srtObjectsList[i][0],specifiedFiles[i][1],specifiedFiles[i][2],specifiedFiles[i][3])
 
-#if only kanji, add as kanji, write out, quit
-if onlyKanji == True:
-    addToBDNXML(srtFile, 'kanji')
-
-# dialogue + romaji    
-if kanjiFileSpecified != True:
-    if romajiFileSpecified == True:
-        addToBDNXML(srtFile, 'dialogue')
-        addToBDNXML(romajiSrtFile, 'romaji')
-
-# dialogue + kanji
-if kanjiFileSpecified == True:
-    if romajiFileSpecified != True:
-        addToBDNXML(srtFile, 'dialogue')
-        addToBDNXML(kanjiSrtFile, 'kanji')
-
-# dialogue + romaji + kanji
-if kanjiFileSpecified == True:
-    if romajiFileSpecified == True:
-        addToBDNXML(srtFile, 'dialogue')
-        addToBDNXML(romajiSrtFile, 'romaji')
-        addToBDNXML(kanjiSrtFile, 'kanji')
-
-# kanji + romaji   #not a supported operation due to requiring input.srt, (interface issue)
-
-firstEventTime=lowestBDNXMLinTimeObject[0]
-lastEventTime=highestBDNXMLinTimeObject[0]
-
-#print('Total Events: ' + str(numberOfEventsCounter))
+#lxml template
+#from lxml import etree 
+#to create
+#html = etree.Element("html")
+#add child elements, with reference available later
+#body = etree.SubElement(html, "body")
+#child2 = etree.SubElement(html, "child2")
+#child3 = etree.SubElement(html, "child3")
+#body.text = "TEXT"  invalid(?)
+#paragraph= etree.SubElement(body,"p")
+#paragraph.text="Hello"
+#etree.tostring(html)  #string, can be written using regular IO library
+#to write
+#etree.ElementTree(etree.XML('<hi/>')).write('temp.xml',xml_declaration=True, encoding='UTF-8')
+#or
+#temp=etree.ElementTree(xmldoc)
+#temp.write('output.xml',pretty_print=True,xml_declaration=True, encoding='UTF-8')
 
 #bdnxml template
 #<BDN Version="0.93" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -730,27 +700,54 @@ lastEventTime=highestBDNXMLinTimeObject[0]
 #           <Graphic Width="620" Height="80" X="49" Y="398">00000024_0.compressed.png</Graphic>
 #        </Event>
 
-#from https://stackoverflow.com/questions/863183/python-adding-namespaces-in-lxml
-namespace='http://www.w3.org/2001/XMLSchema-instance'
-BDNfileformat='BD-03-006-0093b BDN File Format.xsd'
-location_attribute = '{%s}noNamespaceSchemaLocation' % namespace
+xmldoc = 0
 
-#define object
-xmldoc = etree.Element('BDN', attrib={location_attribute: BDNfileformat}, Version='0.93')
-description = etree.SubElement(xmldoc,'Description')
-etree.SubElement(description, 'Name', Title='Undefined', Content='')
-etree.SubElement(description, 'Language',  Code='en')
-etree.SubElement(description, 'Format',  DropFrame=dropFrameStatus, VideoFormat=quality, FrameRate=str(fpsRate.quantize(num('.001'))))
-#etree.SubElement(description, 'Events',  Type='Graphic', NumberofEvents=numberOfEventsCounter, ContentOutTC=lastEventTime, ContentInTC='00:00:00:00', FirstEventInTC=firstEventTime, LastEventOutTC=lastEventTime)
-#description_events not written here because requires information not yet known
-events = etree.SubElement(xmldoc,'Events')
+def buildXML(eventsList):
+    global xmldoc
+    
+    #from https://stackoverflow.com/questions/863183/python-adding-namespaces-in-lxml
+    namespace='http://www.w3.org/2001/XMLSchema-instance'
+    BDNfileformat='BD-03-006-0093b BDN File Format.xsd'
+    location_attribute = '{%s}noNamespaceSchemaLocation' % namespace
+
+    #eventsList[i]=[parsedFilename,totalMilliseconds,inTime,outTime,graphicWidth,graphicHeight,graphicXOffset,graphicYOffset]
+    lowestBDNXMLinTimeObject=0
+    highestBDNXMLinTimeObject=0
+
+    #sort event list
+    sortedEventsList=sorted(eventsList, key=lambda a: a[1])
+    #save first and last events
+    firstEventTime=sortedEventsList[0][2]
+    lastEventTime=sortedEventsList[len(sortedEventsList)-1][2]
+
+    #get total number of events
+    numberOfEvents=len(sortedEventsList)
+
+    #define object
+    xmldoc = etree.Element('BDN', attrib={location_attribute: BDNfileformat}, Version='0.93')
+    description = etree.SubElement(xmldoc,'Description')
+    etree.SubElement(description, 'Name', Title='Undefined', Content='')
+    etree.SubElement(description, 'Language',  Code='en')
+    etree.SubElement(description, 'Format',  DropFrame=dropFrameStatus, VideoFormat=quality, FrameRate=str(fpsRate.quantize(num('.001'))))
+    etree.SubElement(description, 'Events',  Type='Graphic', NumberofEvents=str(numberOfEvents), ContentOutTC=lastEventTime, ContentInTC='00:00:00:00', FirstEventInTC=firstEventTime, LastEventOutTC=lastEventTime)
+    events = etree.SubElement(xmldoc,'Events')
+
+    #loop through events and add to xml object
+    #eventsList[i]=[parsedFilename,totalMilliseconds,inTime,outTime,graphicWidth,graphicHeight,graphicXOffset,graphicYOffset]
+    for i in range(len(sortedEventsList)):
+        tempEvent=etree.SubElement(events,'Event', Forced='False', InTC=sortedEventsList[i][2], OutTC=sortedEventsList[i][3])
+        tempGraphic=etree.SubElement(tempEvent,'Graphic', Width=str(sortedEventsList[i][4]), Height=str(sortedEventsList[i][5]), X=str(sortedEventsList[i][6]), Y=str(sortedEventsList[i][7]))
+        tempGraphic.text=sortedEventsList[i][0]
+    
+    #tempEvent=etree.SubElement(events,'Event', Forced='False', InTC=inTime, OutTC=outTime)
+    #tempGraphic=etree.SubElement(tempEvent,'Graphic', Width=str(graphicWidth), Height=str(graphicHeight), X=str(graphicXOffset), Y=str(graphicYOffset))
+    #tempGraphic.text=parsedFilename
+
+    #debug code
+    #print(etree.tostring(xmldoc,pretty_print=True))  #send to stdout
 
 
-#write last event
-etree.SubElement(description, 'Events',  Type='Graphic', NumberofEvents=str(numberOfEventsCounter), ContentOutTC=lastEventTime, ContentInTC='00:00:00:00', FirstEventInTC=firstEventTime, LastEventOutTC=lastEventTime)
-
-#debug code
-#print(etree.tostring(xmldoc,pretty_print=True))  #send to stdout
+buildXML(eventsList)
 
 #and finally writeout to filesystem
 def writeOutput():

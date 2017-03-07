@@ -1,8 +1,9 @@
-﻿- split yoffset to dialogue offset and romaji offset
-- if romaji/kanji file was specified and does not exist then error out
-- old bug: remove duplicate dialogue if romaji was specified
-- add multifile processing capabilities -partial
-    - add to single data structure
+﻿- split yoffset to dialogue offset and romaji offset -done
+- modify values with distortion ratio for better default placement in 3:4 video
+- if romaji/kanji file was specified and does not exist then error out -need to test
+- old bug: remove duplicate dialogue if romaji was specified -done
+- add multifile processing capabilities -done
+    - add to single data structure  -done
     - sort based upon start time (tree)
 - output only "cleaned" SRT (--removequirks, -rq) -Important! -only half done
    - (modify lastsubtitle + --keepfirst, -kf, --keeplast, -kl), keep full path or not
@@ -18,4 +19,4 @@ Long term:
 
 Done:
 - add additional resolutions -done
-- add 4:3 resolution hack   -done
+- add 4:3 resolutions   -done
